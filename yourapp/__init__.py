@@ -5,7 +5,7 @@ from flask_jwt import JWT, jwt_required, current_identity
 from security import authenticate, identity
 
 app = Flask(__name__)
-app.config['PROPAGATE_EXCEPTIONS'] = True # To allow flask propagating exception even if debug is set to false on app
+app.config['PROPAGATE_EXCEPTIONS'] = True
 app.secret_key = 'parafia'
 api = Api(app)
 
@@ -44,7 +44,6 @@ class Item(Resource):
     @jwt_required()
     def put(self, name):
         data = Item.parser.parse_args()
-        # Once again, print something not in the args to verify everything works
         item = next(filter(lambda x: x['name'] == name, items), None)
         if item is None:
             item = {'name': name, 'price': data['price']}
